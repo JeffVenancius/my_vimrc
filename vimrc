@@ -6,43 +6,36 @@ set path+=**                         " fzf files
 set clipboard=unnamedplus            " registers to system clipboard
 set mouse=a
 set cursorline
-set number
-set relativenumber
+set number relativenumber
 set termguicolors
 set history=10000
-set updatetime=300
 set foldmethod=syntax                " starts files in folds
-
-set splitbelow
-set splitright
+set splitbelow splitright
 
 syntax enable
 filetype plugin on
-
-set timeoutlen=500                   " vim timeout
-set ttimeoutlen=50                   " system timeout
 language en_US.utf8
+set encoding=utf-8
 
+" =========================================================================
+" timing
+" =========================================================================
+set updatetime=300
+set timeoutlen=500 ttimeoutlen=50    " vim/sys timeout
 " =========================================================================
 " Cursor shape
 " =========================================================================
 let &t_SI = "\e[6 q"
 let &t_EI = "\e[2 q"
-
 " ========================================================================= 
 " bakup
 " ========================================================================= 
-set nobackup
-set nowritebackup
-set noswapfile
-
+set nobackup nowritebackup noswapfile
 " ========================================================================= 
 " search
 " ========================================================================= 
-set hlsearch
-set incsearch
-set ignorecase
-set smartcase
+set hlsearch incsearch
+set ignorecase smartcase
 " ========================================================================= 
 " netrw
 " ========================================================================= 
@@ -91,21 +84,15 @@ set list
 " ========================================================================= 
 " indentation
 " ========================================================================= 
-set noexpandtab
-set tabstop=2
-set shiftwidth=2
-set autoindent
-set smartindent
-set cindent
+set noexpandtab tabstop=2 shiftwidth=2
+set autoindent smartindent cindent
 
 " =========================================================================
 " completion
 " =========================================================================
 set wildmenu                         " completion on command mode
 set omnifunc=syntaxcomplete#Complete
-set encoding=utf-8
-set completeopt-=preview
-set completeopt+=menuone,noselect
+set completeopt-=preview completeopt+=menuone,noselect
 set shortmess+=c
 
 " =========================================================================
@@ -145,7 +132,9 @@ inoremap ' ''<left>
 inoremap " ""<left>
 inoremap { {}<left>
 
+
 " Commentary
+"
 xnoremap <silent><leader>; <Plug>Commentary
 nnoremap <silent><leader>; <Plug>Commentary
 onoremap <silent><leader>; <Plug>Commentary
@@ -160,3 +149,20 @@ nnoremap <silent><leader>/ :Lex<cr>
 nnoremap <leader><tab> :tabnew 
 nnoremap <leader>\ :vsp 
 nnoremap <leader>- :sp 
+
+" =========================================================================
+" automcmds
+" =========================================================================
+autocmd bufwritepre .vimrc :source
+autocmd filetype c,cpp,javascript abbrev for for(int i = 0; i < __var__;i++<esc>?__var__<enter>ciw
+autocmd filetype python,gdscript abbrev for for i in 
+autocmd filetype python,gdscript abbrev if if:<left>
+abbrev r;; return
+abbrev p;; print
+autocmd filetype javascript abbrev p;; console.out
+autocmd filetype cpp abbrev p;; cout <<
+autocmd filetype cpp abbrev ios;; #include <iostream>
+autocmd filetype cpp abbrev inc;; #include
+autocmd filetype python,javascript abbrev inc;; import
+autocmd filetype html,xml inoremap < <__var__></__var__><esc>:s/__var__//g<left><left>
+autocmd filetype vim iunmap "
